@@ -7,13 +7,13 @@ export const mapCommands = async (command: string, start: number, results: Execu
     return await new Promise<ExecutionResult>((res, rej) => {
         let output: string[] = [];
         if (stderr) {
-            stderr.on('error', (error) => stderrCallbacks.onError(command, start, error, res));
+            stderr.on('error', (error) => stderrCallbacks.onError(command, start, error, performance, res));
         }
     
         if (stdout) {
-            stdout.on('error', (error) => stdoutCallbacks.onError(command, start, error, res));
+            stdout.on('error', (error) => stdoutCallbacks.onError(command, start, error, performance, res));
             stdout.on('data', (data) => stdoutCallbacks.onData(output, data));
-            stdout.on('close', () => stdoutCallbacks.onClose(command, start, output, res));
+            stdout.on('close', () => stdoutCallbacks.onClose(command, start, output, performance, res));
         }
     });
 }

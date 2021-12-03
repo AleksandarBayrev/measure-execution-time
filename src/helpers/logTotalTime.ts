@@ -1,7 +1,6 @@
-import { performance } from 'perf_hooks';
 import { ExecutionResult } from '../types';
 
-export const logTotalTime = (startTime: number, command: string): ExecutionResult => {
+export const logTotalTime = (startTime: number, command: string, performance: Performance): ExecutionResult => {
     return {
         command,
         executionTime: performance.now() - startTime
