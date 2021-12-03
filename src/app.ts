@@ -1,35 +1,29 @@
-import process from 'process';
-import { getCommand, logTotalTime, readConfig } from './helpers';
-import { performance } from 'perf_hooks';
-import { exec } from 'child_process';
 
-(() => {
+import { getCommand, printExecutionResults, readConfig } from './helpers';
+import { ExecutionResult } from './types';
+import { mapCommands } from './mappers';
+import { process } from './dependencies';
+import { logSingleCommandInfo } from './mappers/logSingleCommandInfo';
+
+(async () => {
+    const results: ExecutionResult[] = []
     let configArgument = getCommand(process.argv);
-    console.log(configArgument);
-    if (configArgument.length === 0) {
+    if (configArgument.value.length === 0) {
         console.error('Specify a JSON config file that follows this structure:');
         console.log(`{commands: Array<string>}`);
         return;
     }
-    const config = readConfig(configArgument.split('=')[1])
+    const config = readConfig(configArgument.value);
+    console.log(`Configuration: ${JSON.stringify(config)}`);
     if (config.commands.length === 0) {
-        console.error('Specify commands to be measured!')
+        console.error('Specify commands to be measured!');
         return;
     }
     const start = performance.now();
-    config.commands.map(async (command) => {
-        const {stdout, stderr} = await exec(command);
-        stderr?.on('error', (error) => {
-            console.log(`Command ${command} error: ${error}`);
-        });
-        stdout?.on('error', (error) => {
-            console.log(`Command ${command} error: ${error}`);
-        });
-        stdout?.on('data', (data) => {
-            console.log(`Command ${command} output: ${data}`);
-        });
-        stdout?.on('close', () => {
-            logTotalTime(start);
-        })
-    });
-})()
+    const finalResults = await (
+        await Promise.all(config.commands.map(async (command) =>
+            await mapCommands(command, start, results))
+        )
+    ).map(logSingleCommandInfo);
+    printExecutionResults(finalResults)
+})();
