@@ -1,9 +1,8 @@
 
 import { getCommand, printExecutionResults, readConfig } from './helpers';
 import { ExecutionResult } from './types';
-import { mapCommands } from './mappers';
+import { mapCommands, logSingleCommandInfo } from './mappers';
 import { process } from './dependencies';
-import { logSingleCommandInfo } from './mappers/logSingleCommandInfo';
 
 (async () => {
     const results: ExecutionResult[] = []
