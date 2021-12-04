@@ -1,3 +1,4 @@
+import { timeMeasurement } from '../constants';
 import { ExecutionResult } from '../types';
 
 export const printExecutionResults = (results: ExecutionResult[]) => {
@@ -5,5 +6,5 @@ export const printExecutionResults = (results: ExecutionResult[]) => {
     results.map(x => {
         totalExecutionTime += x.executionTime
     });
-    console.log(`Total execution time: ${totalExecutionTime}`);
+    console.log(`Total execution time: ${totalExecutionTime}${timeMeasurement}`);
 }

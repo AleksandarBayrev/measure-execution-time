@@ -1,5 +1,5 @@
 import { exec } from '../dependencies';
-import { ExecutionResult } from "../types";
+import { ExecutionResult } from '../types';
 import { stderrCallbacks, stdoutCallbacks } from './messageCallbacks';
 
 export const mapCommands = async (command: string, start: number) => {

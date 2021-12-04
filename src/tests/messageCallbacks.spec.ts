@@ -1,4 +1,4 @@
-import { stdoutCallbacks, stderrCallbacks } from "../mappers/messageCallbacks";
+import { stdoutCallbacks, stderrCallbacks } from '../mappers/messageCallbacks';
 describe('messageCallbacks', () => {
     const originalConsoleLog = console.log;
     describe('stdoutCallbacks', () => {
@@ -7,15 +7,17 @@ describe('messageCallbacks', () => {
         });
         it('onClose', () => {
             const resCb = jest.fn();
+            console.log = jest.fn();
             const performanceMock: Performance = {
                 now: jest.fn(() => 1)
             } as any as Performance;
-            stdoutCallbacks.onClose('test', 0, [], performanceMock, resCb);
+            stdoutCallbacks.onClose('test', 0, ['hi there'], performanceMock, resCb);
             expect(performanceMock.now).toHaveBeenCalled();
             expect(resCb).toHaveBeenCalledWith({
                 command: 'test',
                 executionTime: 1
             });
+            expect(console.log).toHaveBeenCalledWith(`Command test output: hi there`);
         });
         it('onData', () => {
             const messages: string[] = [];
