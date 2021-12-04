@@ -1,4 +1,4 @@
-import { printExecutionResults } from "../helpers";
+import { printExecutionResults } from '../helpers';
 
 describe('printExecutionResults', () => {
     const originalConsoleLog = console.log
