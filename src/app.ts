@@ -1,5 +1,5 @@
 
-import { getCommand, printExecutionResults, readConfig } from './helpers';
+import { getCommand, printConfig, printExecutionResults, readConfig } from './helpers';
 import { mapCommands, logSingleCommandInfo } from './mappers';
 import { process } from './dependencies';
 import { messages } from './constants';
@@ -12,7 +12,7 @@ import { messages } from './constants';
         return;
     }
     const config = readConfig(configArgument.value);
-    console.log(`Configuration: ${JSON.stringify(config)}`);
+    printConfig(config);
     if (!config.hasOwnProperty('commands')) {
         console.error(messages.MISSING_COMMANDS);
         return;
