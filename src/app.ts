@@ -1,11 +1,9 @@
 
 import { getCommand, printExecutionResults, readConfig } from './helpers';
-import { ExecutionResult } from './types';
 import { mapCommands, logSingleCommandInfo } from './mappers';
 import { process } from './dependencies';
 
 (async () => {
-    const results: ExecutionResult[] = []
     let configArgument = getCommand(process.argv);
     if (configArgument.value.length === 0) {
         console.error('Specify a JSON config file that follows this structure:');
@@ -19,10 +17,10 @@ import { process } from './dependencies';
         return;
     }
     const start = performance.now();
-    const finalResults = await (
+    const results = await (
         await Promise.all(config.commands.map(async (command) =>
-            await mapCommands(command, start, results))
+            await mapCommands(command, start))
         )
     ).map(logSingleCommandInfo);
-    printExecutionResults(finalResults)
+    printExecutionResults(results)
 })();

@@ -2,7 +2,7 @@ import { exec } from '../dependencies';
 import { ExecutionResult } from "../types";
 import { stderrCallbacks, stdoutCallbacks } from './messageCallbacks';
 
-export const mapCommands = async (command: string, start: number, results: ExecutionResult[]) => {
+export const mapCommands = async (command: string, start: number) => {
     const {stdout, stderr} = await exec(command);
     return await new Promise<ExecutionResult>((res, rej) => {
         let output: string[] = [];
