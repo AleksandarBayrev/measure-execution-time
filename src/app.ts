@@ -2,18 +2,23 @@
 import { getCommand, printExecutionResults, readConfig } from './helpers';
 import { mapCommands, logSingleCommandInfo } from './mappers';
 import { process } from './dependencies';
+import { messages } from './constants';
 
 (async () => {
-    let configArgument = getCommand(process.argv);
+    const configArgument = getCommand(process.argv);
     if (configArgument.value.length === 0) {
-        console.error('Specify a JSON config file that follows this structure:');
-        console.log(`{commands: Array<string>}`);
+        console.error(messages.ERROR_STRUCTURE);
+        console.log(messages.VALID_STRUCTURE);
         return;
     }
     const config = readConfig(configArgument.value);
     console.log(`Configuration: ${JSON.stringify(config)}`);
+    if (!config.hasOwnProperty('commands')) {
+        console.error(messages.MISSING_COMMANDS);
+        return;
+    }
     if (config.commands.length === 0) {
-        console.error('Specify commands to be measured!');
+        console.error(messages.MISSING_COMMANDS);
         return;
     }
     const start = performance.now();
@@ -22,5 +27,5 @@ import { process } from './dependencies';
             await mapCommands(command, start))
         )
     ).map(logSingleCommandInfo);
-    printExecutionResults(results)
+    printExecutionResults(results);
 })();
