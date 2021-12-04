@@ -22,5 +22,5 @@ export const getCommand = (listOfArguments: string[]): Command => {
         return defaultCommand;
     }
 
-    return command ? buildCommand(command) : defaultCommand;
+    return command.length !== 0 ? buildCommand(command) : defaultCommand;
 }
