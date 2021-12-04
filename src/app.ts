@@ -1,6 +1,6 @@
 
-import { getCommand, printConfig, printExecutionResults, readConfig } from './helpers';
-import { mapCommands, logSingleCommandInfo } from './mappers';
+import { getCommand, printConfig, printExecutionResults, readConfig, logSingleCommandInfo } from './helpers';
+import { mapCommands } from './mappers';
 import { process } from './dependencies';
 import { messages } from './constants';
 

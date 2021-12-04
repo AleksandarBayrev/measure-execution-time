@@ -1,4 +1,4 @@
-import { logSingleCommandInfo } from '../mappers';
+import { logSingleCommandInfo } from '../helpers';
 import { ExecutionResult } from '../types';
 
 describe('logSingleCommandInfo', () =>  {
