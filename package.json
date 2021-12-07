@@ -6,11 +6,13 @@
   "scripts": {
     "start": "npm run build && node ./dist/measure-execution-time.js",
     "start:norebuild": "node ./dist/measure-execution-time.js",
-    "build": "npm run clean:build && npm run compile:ts && npm run compile:js",
+    "build": "npm run clean:output && npm run compile:ts && npm run compile:js && npm run clean:build",
     "compile:ts": "tsc",
     "compile:js": "webpack --config webpack.config.js",
     "test": "jest",
-    "clean:build": "shx rm -rf ./build && shx rm -rf ./dist"
+    "clean:output": "npm run clean:build && npm run clean:dist",
+    "clean:build": "shx rm -rf ./build",
+    "clean:dist": "shx rm -rf ./dist"
   },
   "repository": {
     "type": "git",
@@ -25,7 +27,7 @@
   "author": "Aleksandar Bayrev <aleksandarbayrev@gmail.com>",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@types/jest": "^27.0.3",
+    "@types/jest": "~27.0.3",
     "@types/node": "~16.11.11",
     "shx": "~0.3.3",
     "ts-jest": "~27.0.7",
